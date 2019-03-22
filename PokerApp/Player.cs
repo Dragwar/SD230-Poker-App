@@ -1,7 +1,5 @@
-﻿using System;
+﻿using PlayingCardsDeck;
 using System.Collections.Generic;
-using System.Text;
-using PlayingCardsDeck;
 
 namespace PokerApp
 {

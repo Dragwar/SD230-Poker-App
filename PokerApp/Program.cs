@@ -11,28 +11,22 @@ namespace PokerApp
             Console.Title = "Deck consists of: (52 total playing cards), (4 suits), (13 playing cards per suit)";
 
         Start:
-            GameManager game = new GameManager(players: (new List<IPlayer>() { new Player("Everett"), new Player("Dan") }));
-            DeckManager deckManager = new DeckManager();
-
-
+            GameManager game = new GameManager(players: (new List<IPlayer>()
+            {
+                new Player("Everett"),
+                new Player("Darius"),
+                new Player("Susan"),
+                new Player("Jill"),
+                new Player("Toby"),
+                new Player("John"),
+                new Player("Gui"),
+                new Player("Dan"),
+            }));
 
             // Tests go here for now
             Console.WriteLine("Now Dealing Five Cards To Each Player...");
-            foreach (IPlayer player in game.Players)
-            {
-                PlayingCard dealtCard = game.DeckManager.Deal();
-                player.Hand.Cards.Add(dealtCard);
-                Console.WriteLine($"{player.Name} got ({dealtCard.ToString()})");
-            }
-
-            foreach (IPlayer player in game.Players)
-            {
-                Console.WriteLine($"Player: {player.Name}");
-                foreach (PlayingCard card in player.Hand.Cards)
-                {
-                    Console.WriteLine(card.ToString());
-                }
-            }
+            game.DealToEachPlayer();
+            game.DisplayAllPlayersHands();
 
 
         LeavingMenu:
