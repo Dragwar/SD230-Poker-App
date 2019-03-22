@@ -19,6 +19,8 @@ namespace PokerApp
 
         private HandRankEnum DetermineRank()
         {
+            throw new NotImplementedException();
+
             List<PlayingCard> tempHand = new List<PlayingCard>(Cards);
 
             // TODO: determine hand Strength/Rank

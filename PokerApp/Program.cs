@@ -1,7 +1,6 @@
 ﻿using PlayingCardsDeck;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PokerApp
 {
@@ -12,40 +11,28 @@ namespace PokerApp
             Console.Title = "Deck consists of: (52 total playing cards), (4 suits), (13 playing cards per suit)";
 
         Start:
+            GameManager game = new GameManager(players: (new List<IPlayer>() { new Player("Everett"), new Player("Dan") }));
             DeckManager deckManager = new DeckManager();
 
-            List<PlayingCard> hand = new List<PlayingCard>();
+
 
             // Tests go here for now
-            Console.WriteLine();
-            deckManager.DisplayDeckInfo();
-            Console.WriteLine();
-
-            Console.WriteLine("Now Removing One Card From The Top...");
-            Console.WriteLine($"Removed: {deckManager.Deal().ToString()}");
-
-            Console.WriteLine();
-            deckManager.DisplayDeckInfo();
-            Console.WriteLine();
-
-            Console.WriteLine("Now Removing Five Cards From The Top...");
-            for (int i = 0; i < 5; i++)
+            Console.WriteLine("Now Dealing Five Cards To Each Player...");
+            foreach (IPlayer player in game.Players)
             {
-                PlayingCard dealtCard = deckManager.Deal();
-                hand.Add(dealtCard);
-                Console.WriteLine($"Removed: {dealtCard.ToString()}");
+                PlayingCard dealtCard = game.DeckManager.Deal();
+                player.Hand.Cards.Add(dealtCard);
+                Console.WriteLine($"{player.Name} got ({dealtCard.ToString()})");
             }
 
-            Console.WriteLine();
-            deckManager.DisplayDeckInfo();
-            Console.WriteLine();
-
-            Console.WriteLine("High Card");
-            List<PlayingCard> tempHand = new List<PlayingCard>();
-            tempHand = ((PlayingCard[])hand.ToArray().Clone()).ToList();
-            tempHand = tempHand.OrderBy(o => o.Value).ToList();
-            PlayingCard HighCard = tempHand.Last();
-            Console.WriteLine(HighCard.ToString());
+            foreach (IPlayer player in game.Players)
+            {
+                Console.WriteLine($"Player: {player.Name}");
+                foreach (PlayingCard card in player.Hand.Cards)
+                {
+                    Console.WriteLine(card.ToString());
+                }
+            }
 
 
         LeavingMenu:
