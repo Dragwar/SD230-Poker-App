@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeckManager", "DeckManager\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MenuSystem", "MenuSystem\MenuSystem.csproj", "{9CC7FDF1-6392-4E3D-901C-3694D10C2C7F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserLibrary", "UserLibrary\UserLibrary.csproj", "{B75C3DB8-A21A-4618-BBDA-6BD710CA53AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9CC7FDF1-6392-4E3D-901C-3694D10C2C7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CC7FDF1-6392-4E3D-901C-3694D10C2C7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CC7FDF1-6392-4E3D-901C-3694D10C2C7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B75C3DB8-A21A-4618-BBDA-6BD710CA53AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B75C3DB8-A21A-4618-BBDA-6BD710CA53AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B75C3DB8-A21A-4618-BBDA-6BD710CA53AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B75C3DB8-A21A-4618-BBDA-6BD710CA53AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
