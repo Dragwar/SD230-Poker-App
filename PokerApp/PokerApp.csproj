@@ -11,4 +11,10 @@
     <ProjectReference Include="..\UserLibrary\UserLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>System.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

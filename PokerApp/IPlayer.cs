@@ -8,6 +8,6 @@ namespace PokerApp
 {
     internal interface IPlayer : IUser
     {
-        List<PlayingCard> Hand { get; set; }
+        Hand Hand { get; set; }
     }
 }

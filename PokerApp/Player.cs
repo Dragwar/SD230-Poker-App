@@ -8,12 +8,12 @@ namespace PokerApp
     internal class Player : IPlayer
     {
         public string Name { get; set; }
-        public List<PlayingCard> Hand { get; set; }
+        public Hand Hand { get; set; }
 
-        public Player(string name)
+        internal Player(string name)
         {
             Name = name;
-            Hand = new List<PlayingCard>(5);
+            Hand = new Hand(new List<PlayingCard>());
         }
 
 
