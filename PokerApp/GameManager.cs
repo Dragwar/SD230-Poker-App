@@ -22,7 +22,8 @@ namespace PokerApp
         [Obsolete("This method is only for development testing")]
         internal void DisplayAllPlayersHands() => _Players.ForEach(player =>
         {
-            Console.WriteLine($"\n{player.Name}'s Hand:"); player.Hand.Cards.ForEach(card => Console.WriteLine(card.ToString()));
+            Console.WriteLine($"\n{player.Name}'s Hand:");
+            player.Hand.Cards.ForEach(card => Console.WriteLine(card.ToString()));
         });
 
         internal GameManager(List<IPlayer> players)

@@ -26,7 +26,16 @@ namespace PokerApp
             // Tests go here for now
             Console.WriteLine("Now Dealing Five Cards To Each Player...");
             game.DealToEachPlayer();
-            game.DisplayAllPlayersHands();
+            //game.DisplayAllPlayersHands();
+
+            var handInfo = game.Players[0].Hand.GetCardCountNameValueList(game.Players[0].Hand.Cards);
+
+            
+            foreach (var cardinfo in handInfo)
+            {
+                Console.WriteLine($"Count: {cardinfo.CardCount} ({cardinfo.CardName} {cardinfo.CardValue})");
+            }
+            Console.WriteLine(game.Players[0].Hand.Rank);
 
 
         LeavingMenu:
