@@ -33,7 +33,7 @@ namespace PokerApp
             
             foreach (var cardinfo in handInfo)
             {
-                Console.WriteLine($"Count: {cardinfo.CardCount} ({cardinfo.CardName} {cardinfo.CardValue})");
+                Console.WriteLine(cardinfo.ToString());
             }
             Console.WriteLine(game.Players[0].Hand.Rank);
 

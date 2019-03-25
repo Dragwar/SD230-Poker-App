@@ -34,7 +34,8 @@ namespace PokerApp
 
             // TODO: determine hand Strength/Rank
             //var a = GetCardCountNameValueList(tempHand);
-            var a = GetCardCountNameValueList(Cards);
+            List<CardCountNameValue> a = GetCardCountNameValueList(Cards);
+            //List<IGrouping<int, FullCardInfo>> testCardGroup = a.GroupBy(card => card.CardCount).ToList();
 
             HashSet<CardCountNameValue> onePairCards = new HashSet<CardCountNameValue>();
             CardCountNameValue threeOfAKind = null;
@@ -82,11 +83,25 @@ namespace PokerApp
             return handRank;
         }
 
-        public List<CardCountNameValue> GetCardCountNameValueList(List<PlayingCard> cards) => (
-            cards.GroupBy(card => card.Value)
+        public List<CardCountNameValue> GetCardCountNameValueList(List<PlayingCard> cards)
+        {
+            var a = cards.GroupBy(card => card.Value)
                  .Select(group => new CardCountNameValue() { CardName = (CardNameValueEnum)group.Key, CardValue = group.Key, CardCount = group.Count() })
-                 .ToList()
-        );
+                 .ToList();
+            //var b = Cards/*.Where(card => a.First(c => c.CardName == card.Name).CardValue == card.Value)*/.Select(card => new FullCardInfo()
+            //{
+            //    Name = card.Name,
+            //    Suit = card.Suit,
+            //    CardCount = a.First(c => c.CardName == card.Name).CardCount,
+            //}).ToList();
+            //b = b.Select(card => new FullCardInfo()
+            //{
+            //    Name = card.Name,
+            //    Suit = card.Suit,
+            //    CardCount = a.First(c => c.CardName == card.Name).CardCount,
+            //}).ToList();
+            return a;
+        }
 
 
         //private HandRankEnum CheckForOnePair(HandRankEnum currentRank)
