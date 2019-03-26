@@ -1,6 +1,6 @@
 ﻿using PlayingCardsDeck;
 
-namespace PokerApp.CardModels
+namespace PokerApp
 {
     public class FullCardInfo
     {

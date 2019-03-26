@@ -1,5 +1,4 @@
 ﻿using PlayingCardsDeck;
-using PokerApp.CardModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,22 +14,21 @@ namespace PokerApp
         internal Hand(List<PlayingCard> cards)
         {
             Cards = cards;
+
+            //Just for testing certain hands
+            //Cards = new List<PlayingCard>()
+            //{
+            //    new PlayingCard(CardNameValueEnum.Two, SuitEnum.Clubs),
+            //    new PlayingCard(CardNameValueEnum.Two, SuitEnum.Diamonds),
+            //    new PlayingCard(CardNameValueEnum.Five, SuitEnum.Diamonds),
+            //    new PlayingCard(CardNameValueEnum.Five, SuitEnum.Diamonds),
+            //    new PlayingCard(CardNameValueEnum.Five, SuitEnum.Diamonds),
+            //};
         }
 
         //TODO: Make rank checks more modular or separate them into methods
         private HandRankEnum DetermineRank()
         {
-            // just for testing hands
-            List<PlayingCard> testingHand = new List<PlayingCard>()
-            {
-                new PlayingCard(CardNameValueEnum.Ace, SuitEnum.Diamonds),
-                new PlayingCard(CardNameValueEnum.Two, SuitEnum.Diamonds),
-                new PlayingCard(CardNameValueEnum.Three, SuitEnum.Diamonds),
-                new PlayingCard(CardNameValueEnum.Four, SuitEnum.Diamonds),
-                new PlayingCard(CardNameValueEnum.Five, SuitEnum.Diamonds),
-            };
-
-            //List<FullCardInfo> cards = GetListOfFullCardInfo(testingHand);
             List<FullCardInfo> cards = GetListOfFullCardInfo(Cards);
 
             // all ranks the current hand falls under
@@ -125,22 +123,14 @@ namespace PokerApp
             return handRank;
         }
 
-        internal List<FullCardInfo> GetListOfFullCardInfo(List<PlayingCard> cards)
-        {
-            //NOTE: Remember if hand is one pair then the count of cardCountNameValues will be 4 (won't change count depending on pairs)
-            List<CardCountNameValue> cardCountNameValues = cards.GroupBy(card => card.Value)
-                 .Select(group => new CardCountNameValue() { CardName = (CardNameValueEnum)group.Key, CardValue = group.Key, CardCount = group.Count() })
-                 .ToList();
-
-            //NOTE: Remember if hand is one pair then the count of fullCardInfos will be 5 (won't change count depending on pairs)
-            List<FullCardInfo> fullCardInfos = cards.Select(card => new FullCardInfo()
+        internal List<FullCardInfo> GetListOfFullCardInfo(List<PlayingCard> cards) =>
+        (
+            cards.Select(card => new FullCardInfo()
             {
                 Name = card.Name,
                 Suit = card.Suit,
-                CardCount = cardCountNameValues.First(c => c.CardName == card.Name).CardCount,
-            }).ToList();
-
-            return fullCardInfos;
-        }
+                CardCount = cards.Count(c => c.Name == card.Name),
+            }).ToList()
+        );
     }
 }
