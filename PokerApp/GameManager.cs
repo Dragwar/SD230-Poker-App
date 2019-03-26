@@ -86,7 +86,7 @@ namespace PokerApp
         {
             WinConditionChecker checker = new WinConditionChecker(Players);
 
-            IReadOnlyList<IPlayer> winners = checker.DetermineWinner();
+            IReadOnlyList<IPlayer> winners = checker.DetermineWinners();
             Console.WriteLine("\n\n");
             Console.ForegroundColor = ConsoleColor.Yellow;
             foreach (IPlayer player in winners)
