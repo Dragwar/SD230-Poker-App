@@ -18,13 +18,6 @@ namespace PokerApp
         internal IReadOnlyList<IPlayer> Players { get => _Players.ToList().AsReadOnly(); }
         internal IReadOnlyList<PlayingCard> Deck { get => DeckManager.Deck.AsReadOnly(); }
 
-        // Only for development testing
-        [Obsolete("This method is only for development testing")]
-        internal void DisplayAllPlayersHands() => _Players.ForEach(player =>
-        {
-            Console.WriteLine($"\n{player.Name}'s Hand:");
-            player.Hand.Cards.ForEach(card => Console.WriteLine(card.ToString()));
-        });
 
         internal GameManager(List<IPlayer> players)
         {
@@ -47,6 +40,34 @@ namespace PokerApp
                 return players;
             }
         }
+
+
+        internal void DisplayAllPlayersHands(bool displayColorCodedSuits) => _Players.ForEach(player =>
+        {
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"{player.Name}'s Hand: ({player.Hand.Rank})");
+            Console.ResetColor();
+
+            List<FullCardInfo> handInfo = player.Hand.GetListOfFullCardInfo(player.Hand.Cards);
+
+            foreach (FullCardInfo cardinfo in handInfo)
+            {
+                if (displayColorCodedSuits)
+                {
+                    switch (cardinfo.Suit)
+                    {
+                        case SuitEnum.Clubs: Console.ForegroundColor = ConsoleColor.DarkBlue; break;
+                        case SuitEnum.Diamonds: Console.ForegroundColor = ConsoleColor.DarkRed; break;
+                        case SuitEnum.Hearts: Console.ForegroundColor = ConsoleColor.Red; break;
+                        case SuitEnum.Spades: Console.ForegroundColor = ConsoleColor.Blue; break;
+                        default: Console.ForegroundColor = ConsoleColor.Gray; break;
+                    }
+                }
+                Console.WriteLine(cardinfo.ToString());
+                Console.ResetColor();
+            }
+        });
 
         internal void DealToEachPlayer()
         {

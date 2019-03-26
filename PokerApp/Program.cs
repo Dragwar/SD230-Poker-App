@@ -1,5 +1,4 @@
-﻿using PlayingCardsDeck;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace PokerApp
@@ -8,8 +7,6 @@ namespace PokerApp
     {
         public static void Main()
         {
-            Console.Title = "Deck consists of: (52 total playing cards), (4 suits), (13 playing cards per suit)";
-
         Start:
             GameManager game = new GameManager(players: (new List<IPlayer>()
             {
@@ -23,19 +20,14 @@ namespace PokerApp
                 new Player("Dan"),
             }));
 
-            // Tests go here for now
+            Console.Title = $"Deck consists of: (52 total playing cards), (4 suits), (13 playing cards per suit)";
+
+
             Console.WriteLine("Now Dealing Five Cards To Each Player...");
             game.DealToEachPlayer();
-            //game.DisplayAllPlayersHands();
 
-            var handInfo = game.Players[0].Hand.GetListOfFullCardInfo(game.Players[0].Hand.Cards);
-
-            
-            foreach (var cardinfo in handInfo)
-            {
-                Console.WriteLine(cardinfo.ToString());
-            }
-            Console.WriteLine(game.Players[0].Hand.Rank);
+            Console.WriteLine("\nPlayer Hands:");
+            game.DisplayAllPlayersHands(false);
 
 
         LeavingMenu:
