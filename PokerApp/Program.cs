@@ -28,7 +28,7 @@ namespace PokerApp
             game.DealToEachPlayer();
             //game.DisplayAllPlayersHands();
 
-            var handInfo = game.Players[0].Hand.GetCardCountNameValueList(game.Players[0].Hand.Cards);
+            var handInfo = game.Players[0].Hand.GetListOfFullCardInfo(game.Players[0].Hand.Cards);
 
             
             foreach (var cardinfo in handInfo)
