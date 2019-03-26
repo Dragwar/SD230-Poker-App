@@ -7,8 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DeckManager\DeckManager.csproj" />
-    <ProjectReference Include="..\MenuSystem\MenuSystem.csproj" />
-    <ProjectReference Include="..\UserLibrary\UserLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>

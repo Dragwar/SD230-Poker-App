@@ -82,9 +82,9 @@ namespace PokerApp
         }
 
 
-        internal void CheckWinConditions()
+        internal void CheckWinConditions(bool filterWinnersOnDrawsByHighCardValue)
         {
-            WinConditionChecker checker = new WinConditionChecker(Players);
+            WinConditionChecker checker = new WinConditionChecker(Players, filterWinnersOnDrawsByHighCardValue);
 
             IReadOnlyList<IPlayer> winners = checker.DetermineWinners();
             Console.WriteLine("\n\n");

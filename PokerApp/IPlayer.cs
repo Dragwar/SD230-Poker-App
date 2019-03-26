@@ -1,10 +1,8 @@
-﻿using UserLibrary;
-
-namespace PokerApp
+﻿namespace PokerApp
 {
-    internal interface IPlayer : IUser
+    internal interface IPlayer
     {
+        string Name { get; }
         Hand Hand { get; set; }
-        string NameAndHandRank { get; }
     }
 }
