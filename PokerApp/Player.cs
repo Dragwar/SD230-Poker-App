@@ -7,6 +7,7 @@ namespace PokerApp
     {
         public string Name { get; set; }
         public Hand Hand { get; set; }
+        public string NameAndHandRank { get => $"{Name} ({Hand.Rank})"; }
 
         internal Player(string name)
         {
@@ -14,6 +15,6 @@ namespace PokerApp
             Hand = new Hand(new List<PlayingCard>());
         }
 
-
+        public override string ToString() => $"{Name}";
     }
 }

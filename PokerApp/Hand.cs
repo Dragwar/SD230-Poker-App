@@ -93,7 +93,7 @@ namespace PokerApp
                     // is hand Straight?
                     bool isStraight = true;
                     int minValue = cards.Min(card => card.Value);
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < cards.Count; i++)
                     {
                         //re-factor (maybe): minValue++ could be moved below this if for more readability
                         if (cards[i].Value != minValue++)

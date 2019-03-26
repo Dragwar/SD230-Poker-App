@@ -28,7 +28,7 @@ namespace PokerApp
 
             Console.WriteLine("\nPlayer Hands:");
             game.DisplayAllPlayersHands(false);
-
+            game.CheckWinConditions();
 
         LeavingMenu:
 

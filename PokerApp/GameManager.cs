@@ -46,7 +46,7 @@ namespace PokerApp
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"{player.Name}'s Hand: ({player.Hand.Rank})");
+            Console.WriteLine($" {player.Name}'s Hand: ({player.Hand.Rank})");
             Console.ResetColor();
 
             List<FullCardInfo> handInfo = player.Hand.GetListOfFullCardInfo(player.Hand.Cards);
@@ -64,7 +64,7 @@ namespace PokerApp
                         default: Console.ForegroundColor = ConsoleColor.Gray; break;
                     }
                 }
-                Console.WriteLine(cardinfo.ToString());
+                Console.WriteLine("  - " + cardinfo.ToString());
                 Console.ResetColor();
             }
         });
@@ -82,9 +82,36 @@ namespace PokerApp
         }
 
 
-        internal void CheckWinConditions(IPlayer player)
+        internal void CheckWinConditions()
         {
-            throw new NotImplementedException();
+            WinConditionChecker checker = new WinConditionChecker(Players);
+
+            IReadOnlyList<IPlayer> winners = checker.DetermineWinner();
+            Console.WriteLine("\n\n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            foreach (IPlayer player in winners)
+            {
+                if (winners.Count > 1)
+                {
+                    if (player == winners.First())
+                    {
+                        Console.Write($" Draw Between: {player.Name}, ");
+                    }
+                    else if (player == winners.Last())
+                    {
+                        Console.Write($"{player.Name} ({checker.HighestRank})\n\n");
+                    }
+                    else
+                    {
+                        Console.Write($"{player.Name}, ");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($" {player.Name} has Won! ({checker.HighestRank})\n");
+                }
+            }
+            Console.ResetColor();
         }
     }
 }
