@@ -18,11 +18,11 @@ namespace PokerApp
             //Just for testing certain hands
             //Cards = new List<PlayingCard>()
             //{
-            //    new PlayingCard(CardNameValueEnum.Two, SuitEnum.Clubs),
-            //    new PlayingCard(CardNameValueEnum.Two, SuitEnum.Diamonds),
-            //    new PlayingCard(CardNameValueEnum.Five, SuitEnum.Diamonds),
-            //    new PlayingCard(CardNameValueEnum.Five, SuitEnum.Diamonds),
-            //    new PlayingCard(CardNameValueEnum.Five, SuitEnum.Diamonds),
+            //    new PlayingCard(CardNameValueEnum.Jack, SuitEnum.Clubs),
+            //    new PlayingCard(CardNameValueEnum.Ten, SuitEnum.Diamonds),
+            //    new PlayingCard(CardNameValueEnum.Seven, SuitEnum.Diamonds),
+            //    new PlayingCard(CardNameValueEnum.Eight, SuitEnum.Diamonds),
+            //    new PlayingCard(CardNameValueEnum.Nine, SuitEnum.Diamonds),
             //};
         }
 
@@ -91,12 +91,15 @@ namespace PokerApp
 
 
                     // is hand Straight?
+                    List<FullCardInfo> sortedCards = new List<FullCardInfo>(cards);
+                    sortedCards = sortedCards.OrderBy(card => card.Value).ToList();
                     bool isStraight = true;
                     int minValue = cards.Min(card => card.Value);
+
                     for (int i = 0; i < cards.Count; i++)
                     {
                         //re-factor (maybe): minValue++ could be moved below this if for more readability
-                        if (cards[i].Value != minValue++)
+                        if (sortedCards[i].Value != minValue++)
                         {
                             isStraight = false;
                             break;
