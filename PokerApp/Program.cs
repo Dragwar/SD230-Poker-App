@@ -8,17 +8,18 @@ namespace PokerApp
         public static void Main()
         {
         Start:
-            GameManager game = new GameManager(players: (new List<IPlayer>()
-            {
-                new Player("Everett"),
-                new Player("Darius"),
-                new Player("Susan"),
-                new Player("Jill"),
-                new Player("Toby"),
-                new Player("John"),
-                new Player("Gui"),
-                new Player("Dan"),
-            }));
+            //GameManager game = new GameManager(players: (new List<IPlayer>()
+            //{
+            //    new Player("Everett"),
+            //    new Player("Darius"),
+            //    new Player("Susan"),
+            //    new Player("Jill"),
+            //    new Player("Toby"),
+            //    new Player("John"),
+            //    new Player("Gui"),
+            //    new Player("Dan"),
+            //}));
+            GameManager game = new GameManager(new Player("Everett"), 2);
 
             Console.Title = $"Deck consists of: (52 total playing cards), (4 suits), (13 playing cards per suit)";
 

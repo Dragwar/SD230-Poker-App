@@ -2,11 +2,34 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace PokerApp
 {
     internal class GameManager
     {
+        internal List<IPlayer> PremadePlayers => new List<IPlayer>()
+        {
+            new Player("Darius"),
+            new Player("Susan"),
+            new Player("Jill"),
+            new Player("Toby"),
+            new Player("Dan"),
+            new Player("Colton"),
+            new Player("Aris"),
+            new Player("Max"),
+            new Player("Amy"),
+            new Player("Cory"),
+            new Player("Chloe"),
+            new Player("Kim"),
+            new Player("Bob"),
+            new Player("Bryan"),
+            new Player("Miguel"),
+            new Player("Lee"),
+            new Player("Eddie"),
+            new Player("Steve"),
+        };
+
         private Random Random { get; }
         private List<IPlayer> _Players { get; set; }
         private DeckManager DeckManager { get; }
@@ -19,12 +42,35 @@ namespace PokerApp
         internal IReadOnlyList<PlayingCard> Deck { get => DeckManager.Deck.AsReadOnly(); }
 
 
+        /// <param name="players">Count has to be within (2 - 8)</param>
         internal GameManager(List<IPlayer> players)
         {
             Random = new Random();
             _Players = CheckValidPlayerCount(players);
             DeckManager = new DeckManager(Random.Next(4, 10));
         }
+        /// <param name="mainPlayer">This is the Main Player of the game</param>
+        /// <param name="amountOfAIPlayers">
+        ///     Range has to be within (1 - 7)
+        ///     If left null it will default to a int between (1 - 7)
+        /// </param>
+        internal GameManager(IPlayer mainPlayer, [Optional] int? amountOfAIPlayers)
+        {
+            Random = new Random();
+            amountOfAIPlayers = DetermineAmountOfPlayers(amountOfAIPlayers);
+            _Players = PremadePlayers.Shuffle()
+                .Take(amountOfAIPlayers.Value)
+                .Append(mainPlayer)
+                .ToList();
+
+            if (_Players.Count > MaxPlayerLimit || _Players.Count < MinPlayerLimit)
+            {
+                throw new Exception("invalid amount of players");
+            }
+
+            DeckManager = new DeckManager(Random.Next(4, 10));
+        }
+        #region RangeChecks
         private List<IPlayer> CheckValidPlayerCount(List<IPlayer> players)
         {
             if (players.Count < MinPlayerLimit)
@@ -40,7 +86,26 @@ namespace PokerApp
                 return players;
             }
         }
-
+        private int DetermineAmountOfPlayers(int? amountOfPlayers)
+        {
+            if (!amountOfPlayers.HasValue)
+            {
+                return Random.Next(MinPlayerLimit, MaxPlayerLimit);
+            }
+            else if (amountOfPlayers.Value < MinPlayerLimit - 1 || amountOfPlayers.Value > MaxPlayerLimit - 1)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            else if (amountOfPlayers.Value >= MinPlayerLimit - 1 || amountOfPlayers.Value <= MaxPlayerLimit - 1)
+            {
+                return amountOfPlayers.Value;
+            }
+            else
+            {
+                throw new Exception("Something went wrong!");
+            }
+        }
+        #endregion
 
         internal void DisplayAllPlayersHands(bool displayColorCodedSuits) => _Players.ForEach(player =>
         {
