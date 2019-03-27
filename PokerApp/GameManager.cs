@@ -49,7 +49,9 @@ namespace PokerApp
             Console.WriteLine($" {player.Name}'s Hand: ({player.Hand.Rank})");
             Console.ResetColor();
 
-            List<FullCardInfo> handInfo = player.Hand.GetListOfFullCardInfo(player.Hand.Cards);
+            List<FullCardInfo> handInfo = player.Hand.GetListOfFullCardInfo(player.Hand.Cards)
+                .OrderBy(card => card.Value)
+                .ToList();
 
             foreach (FullCardInfo cardinfo in handInfo)
             {
