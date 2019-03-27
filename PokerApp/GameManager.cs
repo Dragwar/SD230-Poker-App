@@ -107,7 +107,29 @@ namespace PokerApp
         }
         #endregion
 
-        internal void DisplayAllPlayersHands(bool displayColorCodedSuits) => _Players.ForEach(player =>
+        internal void ModifyHand(IPlayer player)
+        {
+        //TODO: re-factor this method by splitting it into multiple methods
+        Question:
+            Console.WriteLine("Modify your existing hand? (y or n)");
+            ConsoleKey key = Console.ReadKey(true).Key;
+
+            switch (key)
+            {
+                case ConsoleKey.Y:
+                    // make changes to hand
+                    break;
+
+                case ConsoleKey.N: break;
+
+                default:
+                    goto Question;
+            }
+
+            Console.Clear();
+        }
+
+        private void DisplayPlayerHand(IPlayer player, bool displayColorCodedSuits)
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -134,7 +156,22 @@ namespace PokerApp
                 Console.WriteLine("  - " + cardinfo.ToString());
                 Console.ResetColor();
             }
-        });
+        }
+
+        internal void DisplayHandInfo(bool displayColorCodedSuits, [Optional] IPlayer mainPlayer)
+        {
+            if (mainPlayer == null)
+            {
+                foreach (IPlayer player in Players)
+                {
+                    DisplayPlayerHand(player, displayColorCodedSuits);
+                }
+            }
+            else
+            {
+                DisplayPlayerHand(mainPlayer, displayColorCodedSuits);
+            }
+        }
 
         internal void DealToEachPlayer()
         {
