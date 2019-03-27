@@ -45,14 +45,21 @@ namespace PokerApp
                 {
                     // does hand contain a OnePair
                     case 2:
+                        int cardCount = item.ToList().Count;
 
                         // does hand contain a TwoPair
-                        if (item.ToList().Count == 4)
+                        if (cardCount == 4)
                         {
                             tempRanks.Add(HandRankEnum.TwoPair);
                         }
-
-                        tempRanks.Add(HandRankEnum.OnePair);
+                        else if (cardCount == 2)
+                        {
+                            tempRanks.Add(HandRankEnum.OnePair);
+                        }
+                        else
+                        {
+                            throw new Exception("Something went wrong (card pair error)");
+                        }
                         break;
 
                     // does hand contain a ThreeOfAKind
@@ -117,7 +124,7 @@ namespace PokerApp
             // is hand a StraightFlush?
             if (tempRanks.Contains(HandRankEnum.Straight) && tempRanks.Contains(HandRankEnum.Flush))
             {
-                tempRanks.Add(HandRankEnum.StraightFlush);
+                return HandRankEnum.StraightFlush;
             }
 
             // Default to HighCard if no rank was added
