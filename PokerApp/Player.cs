@@ -1,6 +1,7 @@
 ﻿using PlayingCardsDeck;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PokerApp
 {
@@ -22,10 +23,8 @@ namespace PokerApp
 
             List<SuitEnum> cardSuits = GameManager.GetCardSuitEnums();
 
-
             List<CardNameValueEnum> newCardValues = new List<CardNameValueEnum>();
             List<SuitEnum> newCardSuits = new List<SuitEnum>();
-            List<PlayingCard> newCards = new List<PlayingCard>();
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"\nCard Value: [1 - 13] (e.g. \"Ace\", \"1\" or \"Jack\", \"11\")");
@@ -41,16 +40,14 @@ namespace PokerApp
                 // get desired Card Suit
                 newCardSuits.Add(GetNewCardSuitEnum(cardSuits));
 
-                // make new card from selected values above
                 PlayingCard newPlayingCard = new PlayingCard(newCardValues[i], newCardSuits[i]);
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine($"\nCard Added! ({newPlayingCard.ToString()})\n");
                 Console.ResetColor();
 
-                newCards.Add(newPlayingCard);
             }
-            Hand.Cards = newCards;
+            Hand.Cards = newCardValues.Zip(newCardSuits, (CardNameValue, CardSuit) => new PlayingCard(CardNameValue, CardSuit)).ToList();
         }
 
         private SuitEnum GetNewCardSuitEnum(List<SuitEnum> cardSuits)
