@@ -93,6 +93,7 @@ namespace PokerApp
                         if (isFlush)
                         {
                             tempRanks.Add(HandRankEnum.Flush);
+                            break;
                         }
                     }
 

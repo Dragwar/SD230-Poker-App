@@ -15,7 +15,7 @@ namespace PokerApp
 
         private static void Start((string userName, int? numberOfAI, bool? isStrictDraw)? data)
         {
-            // if invalid data, then require data
+            // if invalid data, then reacquire data
             if (!data.HasValue ||
                 string.IsNullOrWhiteSpace(data.Value.userName) ||
                 !data.Value.isStrictDraw.HasValue ||
@@ -88,33 +88,29 @@ namespace PokerApp
 
         private static void CheckToRestartGame((string userName, int? numberOfAI, bool? isStrictDraw) gameData)
         {
-            bool isValidKey = false;
+            ConsoleKey key;
             do
             {
-                Console.WriteLine("\nPress 1 to Restart Test (with same settings)");
+                Console.WriteLine("\nPress 1 to Restart Test (With Same Settings)");
                 Console.WriteLine("Press 2 to Restart Test (Full Reset)");
                 Console.WriteLine("Press 3 to Exit");
-                ConsoleKey key = Console.ReadKey(true).Key;
+                key = Console.ReadKey(true).Key;
 
                 switch (key)
                 {
                     case ConsoleKey.D1:
-                        isValidKey = true;
                         Console.Clear();
                         Console.WriteLine("Restarting . . .\n");
                         Start(gameData);
                         break;
 
-                    case ConsoleKey.D2:
-                        isValidKey = true;
-                        Start(null);
-                        break;
+                    case ConsoleKey.D2: Start(null); break;
 
-                    case ConsoleKey.D3: isValidKey = true; break;
+                    case ConsoleKey.D3: Environment.Exit(0); break;
 
                     default: break;
                 }
-            } while (!isValidKey);
+            } while (key != ConsoleKey.D3);
         }
     }
 }

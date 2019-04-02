@@ -4,5 +4,6 @@
     {
         string Name { get; }
         Hand Hand { get; set; }
+        void ModifyHand();
     }
 }

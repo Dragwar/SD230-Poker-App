@@ -15,12 +15,12 @@ namespace PokerApp
             Hand = new Hand(new List<PlayingCard>());
         }
 
-        internal void ModifyHand()
+        public void ModifyHand()
         {
             //WARNING: this list is off by one (e.g. ace == 0, so ace == 0 + 1)
             List<CardNameValueEnum> cardNameValues = GameManager.GetCardNameValuesEnums();
 
-            List<SuitEnum> cardSuits = GameManager.GetCardSuitEnum();
+            List<SuitEnum> cardSuits = GameManager.GetCardSuitEnums();
 
 
             List<CardNameValueEnum> newCardValues = new List<CardNameValueEnum>();
@@ -97,7 +97,6 @@ namespace PokerApp
 
 
 //private delegate bool ValidRange(int number);
-
 /// <typeparam name="T">only allow enum types</typeparam>
 /// <param name="listEnum"></param>
 /// <param name="validRange"></param>

@@ -41,13 +41,20 @@ namespace PokerApp
         internal IReadOnlyList<IPlayer> Players { get => _Players.ToList().AsReadOnly(); }
         internal IReadOnlyList<PlayingCard> Deck { get => DeckManager.Deck.AsReadOnly(); }
 
-        internal static List<CardNameValueEnum> GetCardNameValuesEnums() => Enum.GetValues(typeof(CardNameValueEnum))
-           .Cast<CardNameValueEnum>()
-           .ToList();
+        internal static List<CardNameValueEnum> GetCardNameValuesEnums() =>
+        (
+            Enum.GetValues(typeof(CardNameValueEnum))
+               .Cast<CardNameValueEnum>()
+               .ToList()
+        );
 
-        internal static List<SuitEnum> GetCardSuitEnum() => Enum.GetValues(typeof(SuitEnum))
+        internal static List<SuitEnum> GetCardSuitEnums() =>
+        (
+            Enum.GetValues(typeof(SuitEnum))
                 .Cast<SuitEnum>()
-                .ToList();
+                .ToList()
+        );
+
 
         /// <param name="players">Count has to be within (2 - 8)</param>
         internal GameManager(List<IPlayer> players)
