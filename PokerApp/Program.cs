@@ -8,18 +8,19 @@ namespace PokerApp
         {
             Console.Title = $"Deck consists of: (52 total playing cards), (4 suits), (13 playing cards per suit)";
 
-            (string userName, int? numberOfAI, bool? isStrictDraw) = SetUpGame();
+            (string userName, int? numberOfAI, bool? isStrictDraw, bool? allowHandModify) = SetUpGame();
 
-            Start((userName, numberOfAI, isStrictDraw));
+            Start((userName, numberOfAI, isStrictDraw, allowHandModify));
         }
 
-        private static void Start((string userName, int? numberOfAI, bool? isStrictDraw)? data)
+        private static void Start((string userName, int? numberOfAI, bool? isStrictDraw, bool? allowHandModify)? data)
         {
             // if invalid data, then reacquire data
             if (!data.HasValue ||
                 string.IsNullOrWhiteSpace(data.Value.userName) ||
                 !data.Value.isStrictDraw.HasValue ||
                 !data.Value.numberOfAI.HasValue ||
+                !data.Value.allowHandModify.HasValue ||
                 data.Value.numberOfAI < 1 ||
                 data.Value.numberOfAI > 7)
             {
@@ -33,8 +34,10 @@ namespace PokerApp
             Console.WriteLine("\nNow Dealing Five Cards To Each Player...");
             game.DealToEachPlayer();
 
-
-            game.ModifyHands();
+            if (data.Value.allowHandModify.HasValue && data.Value.allowHandModify.Value)
+            {
+                game.ModifyHands();
+            }
 
 
             Console.WriteLine("\nPlayer Hands:");
@@ -42,10 +45,10 @@ namespace PokerApp
             game.CheckWinConditions(data.Value.isStrictDraw.Value);
 
 
-            CheckToRestartGame((data.Value.userName, data.Value.numberOfAI.Value, data.Value.isStrictDraw));
+            CheckToRestartGame((data.Value.userName, data.Value.numberOfAI.Value, data.Value.isStrictDraw, data.Value.allowHandModify));
         }
 
-        private static (string, int?, bool?) SetUpGame()
+        private static (string, int?, bool?, bool?) SetUpGame()
         {
             // Player name
             string userName;
@@ -72,21 +75,35 @@ namespace PokerApp
 
             // Draw rules
             bool? isStrictDraw = null;
-            ConsoleKey key;
+            ConsoleKey tieDrawAnswer;
             do
             {
                 Console.WriteLine();
                 Console.WriteLine("Tie/Draw rules:");
                 Console.WriteLine("[Strict-Draw] --> (Y) - Only players with the same Hand Rank and same HighCard Value will be a tie ");
                 Console.WriteLine("[Non-Strict-Draw] --> (N) - Player's with the same hand will always be a tie/draw regardless of the HighCard");
-                key = Console.ReadKey(true).Key;
-                isStrictDraw = key == ConsoleKey.Y ? true : key == ConsoleKey.N ? false : isStrictDraw;
-            } while ((key != ConsoleKey.Y || key != ConsoleKey.N) && !isStrictDraw.HasValue);
+                tieDrawAnswer = Console.ReadKey(true).Key;
+                isStrictDraw = tieDrawAnswer == ConsoleKey.Y ? true : tieDrawAnswer == ConsoleKey.N ? false : isStrictDraw;
+            } while ((tieDrawAnswer != ConsoleKey.Y || tieDrawAnswer != ConsoleKey.N) && !isStrictDraw.HasValue);
 
-            return (userName, numberOfAI.Value, isStrictDraw.Value);
+
+            // Modify hands?
+            bool? allowModify = null;
+            ConsoleKey modifyAnswer;
+            do
+            {
+                Console.WriteLine();
+                Console.WriteLine("Modify player hands?");
+                Console.WriteLine("(Y) - Choose what player hands to modify");
+                Console.WriteLine("(N) - Let system randomize hands and prevent modification");
+                modifyAnswer = Console.ReadKey(true).Key;
+                allowModify = modifyAnswer == ConsoleKey.Y ? true : modifyAnswer == ConsoleKey.N ? false : allowModify;
+            } while ((modifyAnswer != ConsoleKey.Y || modifyAnswer != ConsoleKey.N) && !allowModify.HasValue);
+
+            return (userName, numberOfAI.Value, isStrictDraw.Value, allowModify.Value);
         }
 
-        private static void CheckToRestartGame((string userName, int? numberOfAI, bool? isStrictDraw) gameData)
+        private static void CheckToRestartGame((string userName, int? numberOfAI, bool? isStrictDraw, bool? allowHandModify) gameData)
         {
             ConsoleKey key;
             do
