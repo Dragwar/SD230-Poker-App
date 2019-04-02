@@ -41,6 +41,13 @@ namespace PokerApp
         internal IReadOnlyList<IPlayer> Players { get => _Players.ToList().AsReadOnly(); }
         internal IReadOnlyList<PlayingCard> Deck { get => DeckManager.Deck.AsReadOnly(); }
 
+        internal static List<CardNameValueEnum> GetCardNameValuesEnums() => Enum.GetValues(typeof(CardNameValueEnum))
+           .Cast<CardNameValueEnum>()
+           .ToList();
+
+        internal static List<SuitEnum> GetCardSuitEnum() => Enum.GetValues(typeof(SuitEnum))
+                .Cast<SuitEnum>()
+                .ToList();
 
         /// <param name="players">Count has to be within (2 - 8)</param>
         internal GameManager(List<IPlayer> players)
@@ -49,6 +56,7 @@ namespace PokerApp
             _Players = CheckValidPlayerCount(players);
             DeckManager = new DeckManager(Random.Next(4, 10));
         }
+
         /// <param name="mainPlayer">This is the Main Player of the game</param>
         /// <param name="amountOfAIPlayers">
         ///     Range has to be within (1 - 7)
@@ -107,27 +115,53 @@ namespace PokerApp
         }
         #endregion
 
-        internal void ModifyHand(IPlayer player)
+
+        /// <param name="player">If this parameter is null then you will be prompted to change all player hands</param>
+        internal void ModifyHands(IPlayer player = null)
         {
-        //TODO: re-factor this method by splitting it into multiple methods
-        Question:
-            Console.WriteLine("Modify your existing hand? (y or n)");
-            ConsoleKey key = Console.ReadKey(true).Key;
-
-            switch (key)
+            if (player == null)
             {
-                case ConsoleKey.Y:
-                    // make changes to hand
-                    break;
+                foreach (IPlayer currentPlayer in _Players)
+                {
+                    ConsoleKey key;
+                    do
+                    {
+                        DisplayPlayerHand(currentPlayer, true);
+                        Console.WriteLine($"Modify {currentPlayer.Name}'s hand? (y or n)\n");
+                        key = Console.ReadKey(true).Key;
 
-                case ConsoleKey.N: break;
+                        switch (key)
+                        {
+                            case ConsoleKey.Y: (currentPlayer as Player).ModifyHand(); break;
+                            case ConsoleKey.N: break;
+                        }
+                        if (key == ConsoleKey.N)
+                        {
+                            break;
+                        }
+                    } while (key != ConsoleKey.Y);
+                }
+            }
+            else
+            {
+                ConsoleKey key;
+                do
+                {
+                    DisplayPlayerHand(player, true);
+                    Console.WriteLine($"Modify {player.Name}'s hand? (y or n)\n");
+                    key = Console.ReadKey(true).Key;
 
-                default:
-                    goto Question;
+                    switch (key)
+                    {
+                        case ConsoleKey.Y: (player as Player).ModifyHand(); break;
+                        case ConsoleKey.N: break;
+                    }
+                } while (key != ConsoleKey.Y || key != ConsoleKey.N);
             }
 
             Console.Clear();
         }
+
 
         private void DisplayPlayerHand(IPlayer player, bool displayColorCodedSuits)
         {

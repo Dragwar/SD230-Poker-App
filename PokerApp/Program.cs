@@ -16,11 +16,11 @@ namespace PokerApp
         private static void Start((string userName, int? numberOfAI, bool? isStrictDraw)? data)
         {
             // if invalid data, then require data
-            if (!data.HasValue || 
-                string.IsNullOrWhiteSpace(data.Value.userName) || 
+            if (!data.HasValue ||
+                string.IsNullOrWhiteSpace(data.Value.userName) ||
                 !data.Value.isStrictDraw.HasValue ||
                 !data.Value.numberOfAI.HasValue ||
-                data.Value.numberOfAI < 1 || 
+                data.Value.numberOfAI < 1 ||
                 data.Value.numberOfAI > 7)
             {
                 data = SetUpGame();
@@ -30,12 +30,11 @@ namespace PokerApp
             GameManager game = new GameManager(mainPlayer, data.Value.numberOfAI.Value);
 
 
-            Console.WriteLine("Now Dealing Five Cards To Each Player...");
+            Console.WriteLine("\nNow Dealing Five Cards To Each Player...");
             game.DealToEachPlayer();
 
 
-            //game.DisplayPlayerHand(mainPlayer, true);
-            //game.ModifyHand(mainPlayer);
+            game.ModifyHands();
 
 
             Console.WriteLine("\nPlayer Hands:");
